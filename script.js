@@ -24,13 +24,14 @@ async function fetchProfs() {
   });
 }
 
-async function vote(name, value) {
-  await fetch(`${API_BASE}/vote`, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ name, value })
-  });
-  fetchProfs();
+async function fetchProfs() {
+  try {
+    const response = await fetch("profs.json");
+    const data = await response.json();
+    displayProfs(data);
+  } catch (error) {
+    console.error("Failed to load professor data:", error);
+  }
 }
 
 fetchProfs();
